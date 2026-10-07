@@ -70,8 +70,7 @@
 #authContent{
   width:100% !important;
   height:100% !important;
-  display:grid !important;
-  grid-template-columns:1fr 1fr !important;
+  display:block !important;
   margin:0 !important;
   padding:0 !important;
 }
@@ -159,6 +158,32 @@
   color:#176b4d;
   font-weight:700;
   text-decoration:none;
+}
+  .consent-list{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+  margin-top:8px;
+}
+
+.consent-list label{
+  display:flex;
+  align-items:flex-start;
+  gap:10px;
+  font-size:14px;
+  line-height:1.4;
+  color:#344054;
+}
+
+.consent-list input[type="checkbox"]{
+  width:17px;
+  height:17px;
+  margin:1px 0 0;
+  flex:0 0 auto;
+}
+
+.consent-list a{
+  font-weight:600;
 }
 
 .login-panel a:hover{
@@ -346,10 +371,67 @@ function authForm(mode){
   </div>
 
 </div>`:
- `<h2>Join BRS</h2><p>₹250/month or ₹650 for 3 months.</p>
- <input id="name" placeholder="Full name"><input id="email" type="email" placeholder="Email"><input id="phone" placeholder="Mobile"><input id="password" type="password" placeholder="Password (8+ characters)"><label style="display:block;font-size:12px;margin-top:8px"><input id="adult" type="checkbox" style="width:auto"> I confirm I am 18 or older.</label><label style="display:block;font-size:12px"><input id="termsOk" type="checkbox" style="width:auto"> I accept the <a href="/terms.html" target="_blank">Terms</a>.</label><label style="display:block;font-size:12px"><input id="privacyOk" type="checkbox" style="width:auto"> I accept the <a href="/privacy.html" target="_blank">Privacy Notice</a>.</label><label style="display:block;font-size:12px"><input id="safetyOk" type="checkbox" style="width:auto"> I agree to the <a href="/safety.html" target="_blank">Community Safety Rules</a> and <a href="/recording.html" target="_blank">Recording Notice</a>.</label>
- <button class="btn green" style="width:100%;margin-top:8px" onclick="register()">Create account</button>
- <p style="text-align:center">Already a member? <a href="#" onclick="authForm('login')">Login</a></p>`;
+ `<div class="auth-layout">
+
+  <div class="auth-image">
+    <img src="/brs_saraswati_login_art.jpg"
+         alt="Saraswati Maa - BRS Digital Library">
+  </div>
+
+  <div class="login-panel">
+
+    <h2>Join BRS</h2>
+
+    <p>
+      ₹250/month or ₹650 for 3 months.
+    </p>
+
+    <input id="name" placeholder="Full name">
+
+    <input id="email" type="email" placeholder="Email">
+
+    <input id="phone" placeholder="Mobile">
+
+    <input id="password" type="password" placeholder="Password (8+ characters)">
+
+    <div class="consent-list">
+
+      <label>
+        <input type="checkbox" id="adult">
+        I confirm I am 18 or older.
+      </label>
+
+      <label>
+        <input type="checkbox" id="privacy">
+        I accept the <a href="/privacy.html" target="_blank">Privacy Notice</a>.
+      </label>
+
+      <label>
+        <input type="checkbox" id="terms">
+        I accept the <a href="/terms.html" target="_blank">Terms & Conditions</a>.
+      </label>
+
+      <label>
+        <input type="checkbox" id="safety">
+        I agree to the <a href="/safety.html" target="_blank">Community Safety Rules</a>
+        and <a href="/recording.html" target="_blank">Recording Notice</a>.
+      </label>
+
+    </div>
+
+    <button class="btn green" style="width:100%;margin-top:18px"
+            onclick="register()">
+      Create account
+    </button>
+
+    <p style="text-align:center;margin-top:20px">
+      Already a member?
+      <a href="#" onclick="authForm('login')">Login</a>
+    </p>
+
+  </div>
+
+</div>`;
 }
 async function api(url,opt={}){let r=await fetch(url,{...opt,headers:{'Content-Type':'application/json',...(opt.headers||{})}});let j=await r.json().catch(()=>({}));if(!r.ok)throw new Error(j.error||'Request failed');return j}
 async function login(){try{let j=await api('/api/auth/login',{method:'POST',body:JSON.stringify({email:$('email').value,password:$('password').value})});me=j.user;hide('auth');boot()}catch(e){alert(e.message)}}
