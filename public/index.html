@@ -31,25 +31,169 @@
   box-sizing:border-box;
   box-shadow:0 20px 60px rgba(0,0,0,.30);
 }
- #auth{
-  background:#fff !important;
+/* BRS FULL-SCREEN LOGIN */
+#auth{
+  background:#f8faf9 !important;
   padding:0 !important;
+  align-items:center !important;
+  justify-content:center !important;
 }
 
 #auth .box{
   position:relative !important;
-  width:100vw !important;
+  width:min(1400px,96vw) !important;
+  height:min(820px,94vh) !important;
   max-width:none !important;
-  height:100vh !important;
   max-height:none !important;
   margin:0 !important;
   padding:0 !important;
-  border-radius:0 !important;
   background:#fff !important;
-  box-shadow:none !important;
+  border-radius:24px !important;
   overflow:hidden !important;
+  box-shadow:0 25px 70px rgba(0,0,0,.20) !important;
 }
 
+#auth .x{
+  position:absolute !important;
+  top:18px !important;
+  right:20px !important;
+  z-index:20 !important;
+  width:42px !important;
+  height:42px !important;
+  border:1px solid #ddd !important;
+  border-radius:50% !important;
+  background:#fff !important;
+  font-size:25px !important;
+  cursor:pointer !important;
+}
+
+#authContent{
+  width:100% !important;
+  height:100% !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  margin:0 !important;
+  padding:0 !important;
+}
+
+/* LEFT — SARASWATI */
+.auth-layout{
+  width:100%;
+  height:100%;
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  background:#fff;
+}
+
+.auth-image{
+  height:100%;
+  min-height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  overflow:hidden;
+  border-right:3px solid #d6a84f;
+  background:#f7ead2;
+}
+
+.auth-image img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+  display:block;
+}
+
+/* RIGHT — LOGIN */
+.login-panel{
+  height:100%;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  padding:60px 70px;
+  box-sizing:border-box;
+  background:#fff;
+}
+
+.login-panel h2{
+  margin:0 0 12px;
+  text-align:center;
+  font-size:34px;
+  line-height:1.15;
+  color:#102a56;
+}
+
+.login-panel > p{
+  text-align:center;
+  color:#667085;
+  font-size:16px;
+  margin:0 0 35px;
+}
+
+.login-panel input{
+  width:100%;
+  height:54px;
+  padding:0 16px;
+  margin:0 0 16px;
+  border:1px solid #d0d5dd;
+  border-radius:12px;
+  font-size:16px;
+  box-sizing:border-box;
+  outline:none;
+}
+
+.login-panel input:focus{
+  border-color:#176b4d;
+  box-shadow:0 0 0 3px rgba(23,107,77,.10);
+}
+
+.login-panel .btn.green{
+  width:100% !important;
+  height:56px;
+  border-radius:12px;
+  font-size:18px;
+  font-weight:700;
+  margin-top:4px !important;
+}
+
+.login-panel a{
+  color:#176b4d;
+  font-weight:700;
+  text-decoration:none;
+}
+
+.login-panel a:hover{
+  text-decoration:underline;
+}
+
+@media(max-width:800px){
+  #auth .box{
+    width:96vw !important;
+    height:94vh !important;
+    border-radius:18px !important;
+  }
+
+  .auth-layout{
+    grid-template-columns:1fr;
+    overflow-y:auto;
+  }
+
+  .auth-image{
+    height:42vh;
+    min-height:280px;
+    border-right:none;
+    border-bottom:3px solid #d6a84f;
+  }
+
+  .login-panel{
+    height:auto;
+    min-height:52vh;
+    padding:35px 25px;
+  }
+
+  .login-panel h2{
+    font-size:27px;
+  }
+}
 #auth .x{
   position:absolute !important;
   top:20px !important;
@@ -164,24 +308,43 @@ function hide(id){$(id).classList.remove('show')}
 function authForm(mode){
  $('authContent').innerHTML=mode==='login'?`
 <div class="auth-layout">
+
   <div class="auth-image">
-    <img src="/brs_saraswati_login_art.jpg" alt="Saraswati Maa - BRS Digital Library">
+    <img src="/brs_saraswati_login_art.jpg"
+         alt="Saraswati Maa - BRS Digital Library">
   </div>
 
   <div class="login-panel">
+
     <h2>Welcome to BRS Digital Library</h2>
-    <p>Study with focus. Learn with discipline. Grow with knowledge.</p>
 
-    <input id="email" type="email" placeholder="Email">
-    <input id="password" type="password" placeholder="Password">
+    <p>
+      Study with focus. Learn with discipline. Grow with knowledge.
+    </p>
 
-    <button class="btn green" style="width:100%;margin-top:8px" onclick="login()">Login</button>
+    <input
+      id="email"
+      type="email"
+      placeholder="Email">
 
-    <p style="text-align:center">
+    <input
+      id="password"
+      type="password"
+      placeholder="Password">
+
+    <button
+      class="btn green"
+      onclick="login()">
+      Login
+    </button>
+
+    <p style="margin-top:22px">
       New to BRS?
       <a href="#" onclick="authForm('register')">Create account</a>
     </p>
+
   </div>
+
 </div>`:
  `<h2>Join BRS</h2><p>₹250/month or ₹650 for 3 months.</p>
  <input id="name" placeholder="Full name"><input id="email" type="email" placeholder="Email"><input id="phone" placeholder="Mobile"><input id="password" type="password" placeholder="Password (8+ characters)"><label style="display:block;font-size:12px;margin-top:8px"><input id="adult" type="checkbox" style="width:auto"> I confirm I am 18 or older.</label><label style="display:block;font-size:12px"><input id="termsOk" type="checkbox" style="width:auto"> I accept the <a href="/terms.html" target="_blank">Terms</a>.</label><label style="display:block;font-size:12px"><input id="privacyOk" type="checkbox" style="width:auto"> I accept the <a href="/privacy.html" target="_blank">Privacy Notice</a>.</label><label style="display:block;font-size:12px"><input id="safetyOk" type="checkbox" style="width:auto"> I agree to the <a href="/safety.html" target="_blank">Community Safety Rules</a> and <a href="/recording.html" target="_blank">Recording Notice</a>.</label>
